@@ -25,9 +25,9 @@ print(paginaEcooNodes)
 paginaEcooA <- html_attr(paginaEcooNodes, "href")
 print(paginaEcooA)
 
-########################################################################
-###############EXTRACCION DE LA INFORMACION A CONTENER##################
-########################################################################
+##########################
+#Extracción de información
+##########################
 
 #El orden de los print, es el siguiente:
 #1. Link de la categoria
@@ -73,9 +73,9 @@ for (i in paginaEcooA){
   
   }
 
-########################
-#####TABLA FINAL########
-########################
+#############
+#Tabla final
+############
 
 dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(ListaTitulos), Link = unlist(ListaLinks), Compartidos = unlist(ListaCompartidos))%>%
   arrange(Categoria)
@@ -83,6 +83,10 @@ dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(Lista
 write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
 
 summary(dfFinal$Compartidos)
+
+#########
+#Graficos
+#########
 
 ggplot(dfFinal, 
        aes(x = Categoria, y = Compartidos, colour = Categoria)) + 
@@ -122,56 +126,3 @@ dfFinal%>%
   filter(Categoria == "Arte")%>%
 ggplot( aes( Compartidos)) + geom_line(stat="density")
 
-
-
-
-
-
-
-
-
-
-
-###Está rara esta cosa
- SumaArte <- c()
- SumaEvo <- c()
- SumaLife <- c()
- SumaMedio <- c()
- SumaMusica <- c()
- SumaSci <- c()
- SumaWell <- c()
- ListaSumas <- list()
-
-for (i in dfFinal$Compartidos) {
-    SumaArte <- c(SumaArte,1:12)
-    SumaArte <- sum(SumaArte)
-    
-    SumaEvo <- c(SumaEvo, 13:24)
-    SumaEvo <- sum(SumaEvo)
-                    
-    SumaLife <- c(SumaLife,25:36)
-    SumaLife <- sum(SumaLife)
-    
-    SumaMedio <- c(SumaMedio, 37:48)
-    SumaMedio <- sum(SumaMedio)
-    
-    SumaMusica <- c(SumaMusica, 49:60)
-    SumaMusica <- sum(SumaMusica)
-  
-    SumaSci <- c(SumaSci, 61:72)
-    SumaSci <- sum(SumaSci)
-    
-    SumaWell <- c(SumaWell, 73:84)
-    SumaWell <- sum(SumaWell)
-
-  }
-ListaSumas <- c(ListaSumas, SumaArte, SumaEvo, SumaLife, SumaMedio, SumaMusica, SumaSci, SumaWell)  
-
-dfCompartidos <- data.frame("Categoría" = unlist(ListaCategorias), "Total compartidos" = unlist(ListaSumas))
-
-ggplot(dfCompartidos) +
-  geom_bar(mapping = aes(x = Categoría, y = Total.compartidos, fill = Categoría), stat = "identity") +
-  theme_minimal() +
-  ggtitle("Compartidos por categoría")+
-  guides(fill=FALSE) #+
-  coord_flip()

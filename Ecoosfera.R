@@ -74,10 +74,6 @@ for (i in paginaEcooA){
   }
 
 #############
-#Tabla final
-############
-
-#############
 #Tabla final 
 ############
 

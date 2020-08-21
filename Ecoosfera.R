@@ -77,22 +77,27 @@ for (i in paginaEcooA){
 #Tabla final
 ############
 
+#############
+#Tabla final 
+############
+
 dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(ListaTitulos), Link = unlist(ListaLinks), Compartidos = unlist(ListaCompartidos))%>%
   arrange(Categoria)
 
 write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
 
-summary(dfFinal$Compartidos)
+SumaTotal <- aggregate(dfFinal$Compartidos ~ dfFinal$Categoria, dfFinal[dfFinal$Categoria,], sum)
 
 #########
 #Graficos
 #########
 
+summary(dfFinal$Compartidos)
+
 ggplot(dfFinal, 
        aes(x = Categoria, y = Compartidos, colour = Categoria)) + 
   geom_point() +
   theme_bw()
-
 
 ggplot(dfFinal) +
   geom_bar(mapping = aes(x = Categoria, y = Compartidos, fill = Categoria), stat = "identity") +
@@ -102,18 +107,18 @@ ggplot(dfFinal) +
   coord_flip()
 
 dfFinal %>%
-  filter(Categoria == "Wellness")%>%
+  filter(Categoria == "Medio Ambiente")%>%
   select(Compartidos)%>%
 boxplot(Compartidos,
         main = "Cantidad de compartidos por categoría",
         #sub = "Filtrado por peso relativo mayor a 0.2",
-        xlab = "Wellness",
+        xlab = "Medio Ambiente",
         ylab = "Compartidos",
         col = rainbow(6, alpha=0.2),
         border = rainbow(6, v=0.6))
 
 dfFinal %>%
-  filter(Categoria == "Wellness")%>%
+  filter(Categoria == "Medio Ambiente")%>%
   select(Titulo, Compartidos)%>%
   ggplot(mapping = aes( x = Titulo, y = Compartidos, fill= Titulo))+
   geom_bar(stat = "identity")+
@@ -121,8 +126,4 @@ dfFinal %>%
   theme_bw()+
   coord_flip()
 
-#Darle una vuelta a este grafo
-dfFinal%>%
-  filter(Categoria == "Arte")%>%
-ggplot( aes( Compartidos)) + geom_line(stat="density")
 

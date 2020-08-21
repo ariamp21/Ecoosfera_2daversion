@@ -1,13 +1,9 @@
 #Pagina Ecoosfera: "https://www.ecoosfera.com/"
 
-#install.packages("rvest")
-#install.packages("xml2")
-#install.packages("ggplot2")
-
 library('rvest')
 library("xml2")
 library('ggplot2')
-library(tidyverse)
+library('tidyverse')
 
 #Guardando la pagina
 paginaEcoosfera <- "https://www.ecoosfera.com/"

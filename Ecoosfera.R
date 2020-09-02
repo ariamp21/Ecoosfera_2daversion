@@ -79,6 +79,8 @@ dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(Lista
 write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
 
 SumaTotal <- aggregate(dfFinal$Compartidos ~ dfFinal$Categoria, dfFinal[dfFinal$Categoria,], sum)
+  colnames(SumaTotal)[1] <- "Categoría"
+  colnames(SumaTotal)[2] <- "Compartidos"
 
 #########
 #Graficos
@@ -97,17 +99,6 @@ ggplot(dfFinal) +
   ggtitle("Compartidos por categoría")+
   guides(fill=FALSE)+
   coord_flip()
-
-dfFinal %>%
-  filter(Categoria == "Medio Ambiente")%>%
-  select(Compartidos)%>%
-boxplot(Compartidos,
-        main = "Cantidad de compartidos por categoría",
-        #sub = "Filtrado por peso relativo mayor a 0.2",
-        xlab = "Medio Ambiente",
-        ylab = "Compartidos",
-        col = rainbow(6, alpha=0.2),
-        border = rainbow(6, v=0.6))
 
 dfFinal %>%
   filter(Categoria == "Medio Ambiente")%>%

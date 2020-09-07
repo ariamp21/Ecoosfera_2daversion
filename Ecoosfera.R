@@ -21,16 +21,16 @@ print(paginaEcooNodes)
 paginaEcooA <- html_attr(paginaEcooNodes, "href")
 print(paginaEcooA)
 
-##########################
-#Extracción de información
+###########################
+#Extraccion de informacion
 ##########################
 
 #El orden de los print, es el siguiente:
 #1. Link de la categoria
 #2. Nombre de la categoria a estudiar
-#3. Titulos de las noticias que presenta cada categoria
+#3. Titulos de las noticias 
 #4. Link de cada noticia
-#5. Cantidad total de compartidos para cada noticia
+#5. Cantidad total de compartidos para cada una de ellas
 
 ListaCategorias <- list()
 ListaTitulos <- list()
@@ -78,9 +78,10 @@ dfFinal <- data.frame(Categoria = unlist(ListaCategorias), Titulo = unlist(Lista
 
 write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
 
-SumaTotal <- aggregate(dfFinal$Compartidos ~ dfFinal$Categoria, dfFinal[dfFinal$Categoria,], sum)
+SumaTotal <- aggregate( dfFinal$Compartidos ~ dfFinal$Categoria, dfFinal[dfFinal$Categoria,], sum) 
   colnames(SumaTotal)[1] <- "Categoría"
   colnames(SumaTotal)[2] <- "Compartidos"
+  
 
 #########
 #Graficos
@@ -99,6 +100,7 @@ ggplot(dfFinal) +
   ggtitle("Compartidos por categoría")+
   guides(fill=FALSE)+
   coord_flip()
+
 
 dfFinal %>%
   filter(Categoria == "Medio Ambiente")%>%

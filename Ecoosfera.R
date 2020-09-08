@@ -81,7 +81,6 @@ write.csv(dfFinal, file = "TablaFinalCompartidos.csv")
 SumaTotal <- aggregate( dfFinal$Compartidos ~ dfFinal$Categoria, dfFinal[dfFinal$Categoria,], sum) 
   colnames(SumaTotal)[1] <- "Categoría"
   colnames(SumaTotal)[2] <- "Compartidos"
-  
 
 #########
 #Graficos
@@ -94,6 +93,10 @@ ggplot(dfFinal,
   geom_point() +
   theme_bw()
 
+ggplot(dfFinal,aes(Categoria, Compartidos)) +
+  geom_boxplot()+
+  theme_bw()
+
 ggplot(dfFinal) +
   geom_bar(mapping = aes(x = Categoria, y = Compartidos, fill = Categoria), stat = "identity") +
   theme_minimal() +
@@ -101,14 +104,13 @@ ggplot(dfFinal) +
   guides(fill=FALSE)+
   coord_flip()
 
-
 dfFinal %>%
-  filter(Categoria == "Medio Ambiente")%>%
+  filter(Categoria == "Arte")%>%
   select(Titulo, Compartidos)%>%
   ggplot(mapping = aes( x = Titulo, y = Compartidos, fill= Titulo))+
+  ggtitle("Compartidos por noticia")+
   geom_bar(stat = "identity")+
   guides(fill=FALSE)+
   theme_bw()+
   coord_flip()
-
 
